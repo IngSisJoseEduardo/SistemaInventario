@@ -1,0 +1,25 @@
+Options -Indexes
+IndexIgnore *
+<IfModule mod_rewrite.c>
+# Activar RewriteEngine
+RewriteEngine on
+RewriteBase /SistemaInventario/php
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+ 
+RewriteRule inicio(.*) ../index.php$1
+RewriteRule asignarE(.*) asignaciones.php$1
+RewriteRule asignarR(.*) regAsignaciones.php$1
+RewriteRule creasig(.*) crearAsignacion.php$1
+RewriteRule inventG(.*) inventariogeneral.php$1
+RewriteRule inventR(.*) registroInvG.php$1
+RewriteRule inventD(.*) inventariodetalle.php$1
+RewriteRule inventS(.*) inventariosoftware.php$1
+RewriteRule inventB(.*) inventariobajas.php$1
+RewriteRule usuarioA(.*) usuarios.php$1
+RewriteRule reporteE(.*) formatoReportes.php$1
+RewriteRule Factura(.*) factura.php$1
+RewriteRule SalidaFac(.*) financieros.php$1
+
+
+</IfModule>
