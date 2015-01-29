@@ -26,7 +26,7 @@
 
 							<div class="col-md-6 col-md-offset-1">
 								<input type="submit" class="btn btn-success" value="Guardar" onclick="guardarPartidas();">
-								<input type="button" class="btn btn-danger" id="cancelarPartida" onclick="cancelPartida();" value="Cancelar">
+								<input type="button" class="btn btn-danger" id="cancelarPartida" onclick="cancelarPartida();" value="Cancelar">
 							</div>
 						</form>
 					</div>

@@ -647,6 +647,16 @@
 		});
 		//FIN BOTON DE EXPORTAR A EXCEL
 
+
+
+		//cancleadno la partida
+		$('#cancelarPartida').click(function(){
+			if(confirm('¿Desea cancelar la partida?')){
+				$('#idNumPar').val("");
+				$('#idDescripcionPar').val("");
+				}
+		});
+
 });
 
 function darSalida(id)
@@ -1461,6 +1471,8 @@ function busquedaPartida()
 				$('#edicionPartida').html('procesando...');
 			},
 			success:function(respuesta){
+				if(respuesta==null || respuesta=="")
+					$('#edicionPartida').html('No se econtro');
 				partida="<form onsubmit='return false'><div class='form-group input-group col-md-6 col-md-offset-1'><span class='input-group-addon'>&nbsp;Numero Partida&nbsp;</span><input type='text' id='edNumPartida' class='form-control' value='"+respuesta[1]+"' required></div>"
 				+"<div class='form-group input-group col-md-6 col-md-offset-1'><span class='input-group-addon'>Descripcion</span><textarea id='idDesPartida' class='form-control' required>"+respuesta[2]+"</textarea></div>"
 				+"<input type='hidden' id='partidaMod' value='"+respuesta[0]+"'>"
@@ -1471,6 +1483,9 @@ function busquedaPartida()
 				"<span class='input-group-addon'>Descripcion</span>";
 				// $('#campoBusqueda').val("");
 
+			},
+			error:function(){
+				alert('¡Error');
 			}
 		});
 		// <div class="form-group input-group col-md-6 col-md-offset-1">
