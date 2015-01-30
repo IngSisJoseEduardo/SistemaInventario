@@ -16,13 +16,13 @@
 			self.location="SalidaFac"
 		  </script>';
 		}
-		if($_SESSION['tipoU']=="MATERIALES")
-		{
-			echo 
-		  '<script language="javascript">
-			self.location="Factura"
-		  </script>';
-		}
+		// if($_SESSION['tipoU']=="MATERIALES")
+		// {
+		// 	echo 
+		//   '<script language="javascript">
+		// 	self.location="Factura"
+		//   </script>';
+		// }
 	  }
 	include('crearConexion.php');
 	$sql1="SELECT * FROM cat_categoria";
@@ -126,7 +126,23 @@
 								</li>
 							 <li><a href="reporteE"><span class="glyphicon glyphicon glyphicon-file"></span> Editar Reportes</a></li>';
 					}
+          else if($regPrivilegios['tipo']=="MATERIALES")
+          {
+            echo '<li><a href="asignarE"><span class="glyphicon glyphicon-hand-right"></span>  Asignaciones</a></li>
+                <li class="dropdown">
+                  <a href="#" class="active dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-th-list"></span>  Invientario<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                  <li><a href="inventG">Inventario General</a></li>
+                  <li class="active"><a href="inventD">Inventario Detalle</a></li>
+                  <li><a href="inventS">Inventario Software</a></li>
+                  <li><a href="inventB">Inventario Bajas</a></li>
+                  </ul>
+                </li>
+               <li class=""><a href="reporteE"><span class="glyphicon glyphicon glyphicon-file"></span> Editar Reportes</a></li>
+               <li class=""><a href="Factura"><span class="glyphicon glyphicon-file"></span>Materiáles</a></li>';
+          }
 				}
+        
 			 	else
 				{
 					$nada="no trae nada";

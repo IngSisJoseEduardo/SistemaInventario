@@ -1485,7 +1485,7 @@ function busquedaPartida()
 
 			},
 			error:function(){
-				alert('¡Error');
+				$('#edicionPartida').html('¡La partida no existe!');
 			}
 		});
 		// <div class="form-group input-group col-md-6 col-md-offset-1">
