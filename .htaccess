@@ -20,6 +20,4 @@ RewriteRule usuarioA(.*) usuarios.php$1
 RewriteRule reporteE(.*) formatoReportes.php$1
 RewriteRule Factura(.*) factura.php$1
 RewriteRule SalidaFac(.*) financieros.php$1
-
-
 </IfModule>

@@ -132,11 +132,10 @@ class CFactura
 	private function facturasPagadas()
 	{
 		include_once("../crearConexion.php");
-		$sqlFac="SELECT pkFactura,serie,folio,nombreProveedor,subtotal,total,catestadosaliente.EstadoSaliente,fechaFac,numeroPartida,proyecto,clave,descripcionPartida,importe FROM factura
+		$sqlFac="SELECT pkFactura,serie,folio,nombreProveedor,subtotal,total,catestadosaliente.EstadoSaliente,fechaFac,proyecto,clave,importe FROM factura
 						inner join catproveedor on fkProveedor=pkProveedor 
 						inner join saliente on pkFactura=factura_pkFactura
 						INNER JOIN catestadosaliente on fkEstadoSaliente=pkEstadoSaliente
-						inner join catpartida on fkPartida=pkPartida
 						where fkEstadoSaliente=2
 					ORDER BY fechaYhora DESC;";
 		$rsFac=$mysql->consultas($sqlFac);
@@ -151,11 +150,13 @@ class CFactura
 			$facturas[$x]['total']="$".$regFac[5];
 			$facturas[$x]['t']=$regFac[6];
 			$facturas[$x]['fecha']=$regFac[7];
-			$facturas[$x]['partida']=$regFac[8];
-			$facturas[$x]['proyecto']=$regFac[9];
-			$facturas[$x]['clave']=$regFac[10];
-			$facturas[$x]['descripcion']=$regFac[11];
-			$facturas[$x]['importe']=$regFac[12];
+			// $facturas[$x]['partida']=$regFac[8];
+			$facturas[$x]['proyecto']=$regFac[8];
+			$facturas[$x]['clave']=$regFac[9];
+			// $facturas[$x]['descripcion']=$regFac[11];
+			$facturas[$x]['importe']=$regFac[10];
+
+			
 			//obteniendo detalles de la factura
 			$sqlTD="SELECT COUNT(*) FROM detallefactura WHERE fkFactura=".$regFac[0];
 			$totalDetalles=$mysql->consultas($sqlTD);
