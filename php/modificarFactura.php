@@ -33,13 +33,6 @@
                                                 <option value="Remision">Remision</option>
                                               </select>
                                             </div>
-                                            <div class="col-md-6">
-                                                  <div class="input-group">
-                                                    <input type="text" class="form-control" id="partidaA" placeholder="Busque una Partida">
-                                                    <span class="input-group-addon"> <input type="button" value="Buscar" id="busquedaPar" ></span>
-                                                  </div>
-                                              </div>
-                                            </div>
                                           </div>
                                           <!-- <label for="tipo">Tipo</label> -->
 
@@ -71,7 +64,7 @@
                                                 <div class="form-group">
                                                   <div class="input-group input-group">
                                                     <span class="input-group-addon">&nbsp;  Partida  &nbsp;</span>
-                                                    <select name="partidaFac[]" class="form-control" id="modSlPartidaFac" multiple="multiple" disabled>
+                                                    <select name="partidaFacMod[]" class="form-control" id="modSlPartidaFac" multiple="multiple">
                                                         <!--opciones cargadas con ajax-->
                                                     </select>
                                                   </div>

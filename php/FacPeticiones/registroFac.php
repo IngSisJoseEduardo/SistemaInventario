@@ -59,14 +59,13 @@ $mysql->insUpdDel($sql);
 $sql2="SELECT pkFactura FROM factura WHERE folio='$folio' AND serie='$serie' ";
 $rsFac=$mysql->consultas($sql2);
 $regFac=mysqli_fetch_array($rsFac);
-//INSERT INTO `scipgi`.`detallefactura` (`fkFactura`, `cantidad`, `descripcion`, `precioUnitario`, `iva`, `importe`, `masIva`, `fkEstadoInventario`) VALUES ('1', $cantidad[$x], '$descripcion[$x]', $pUnitario[$x],$iva[$x],$importe[$x],$masIVA[$x],1);
-// REGISTRANDO LAS PARTIDAS PERTENENCIENTE A LA FACTURA
-for ($i=0; $i < count($partida) ; $i++) { 
-	$sqlpar = "INSERT INTO `scipgi`.`factura_partida` (`factura_pkFactura`, `catPartida_pkPartida`) VALUES ($regFac[0],$partida[$i])";
 
-	$mysql->insUpdDel($sqlpar);
+for ($i=0; $i <count($partida) ; $i++) { 
+	$sqlPartida ="INSERT INTO factura_catpartida (factura_pkFactura,catPartida_pkPartida)VALUES($regFac[0],$partida[$i]);";
+	$mysql->insUpdDel($sqlPartida);	
 }
 
+//INSERT INTO `scipgi`.`detallefactura` (`fkFactura`, `cantidad`, `descripcion`, `precioUnitario`, `iva`, `importe`, `masIva`, `fkEstadoInventario`) VALUES ('1', $cantidad[$x], '$descripcion[$x]', $pUnitario[$x],$iva[$x],$importe[$x],$masIVA[$x],1);
 for($x=0;$x<count($cantidad);$x++)
 {
 $sql3="INSERT INTO `scipgi`.`detallefactura` (`fkFactura`, `cantidad`,`unidad`, `descripcion`, `precioUnitario`, `iva`, `importe`, `masIva`, `fkEstadoInventario`) VALUES ($regFac[0], $cantidad[$x],'$unidad[$x]', '$descripcion[$x]', '$pUnitario[$x]','$iva[$x]','$importe[$x]','$masIVA[$x]',1);";

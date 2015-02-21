@@ -1,30 +1,16 @@
 <?php 
+	extract($_REQUEST);
+	include_once "../crearConexion.php";
 
+	$sqlPartidas="SELECT * FROM catpartida WHERE numeroPartida=$param1";
+	$rsPartidas=$mysql->consultas($sqlPartidas);
 
-/**
-* 
-*/
-class agregarPartida
-{
-	
-	public function agregarPartida()
-	{
-		extract($_REQUEST);
-		$this->busqueda($partida);
+	if ($rowPartida= mysqli_fetch_row($rsPartidas)) {
+		$arrayPartida[0]=$rowPartida[0];
+		$arrayPartida[1]=$rowPartida[1];
+		echo json_encode($arrayPartida);
 	}
-	private function busqueda($pPartida)
-	{
-		include_once('../crearConexion.php');
-		$sql  = "SELECT * FROM catpartida WHERE numeroPartida=$pPartida";
-		$datos = $mysql->consultas($sql);
-		if($parB = mysqli_fetch_row($datos))
-		{
-			$partidaInfo[] = $parB[0];
-			$partidaInfo[] = $parB[1];
-			$partidaInfo[] = $parB[2];
-		}
-		echo json_encode($partidaInfo);
+	else{
+		echo 'error';
 	}
-}
-new agregarPartida();
 ?>

@@ -8,7 +8,7 @@ $userID=$_REQUEST['UsuarioFac'];
 $folio=$_REQUEST['folioFac'];
 $serie=$_REQUEST['serieFac'];
 $proyecto=$_REQUEST['proyectoFac'];
-$partida=$_REQUEST['partidaFac'];
+$partida=$_REQUEST['partidaFacMod'];
 $proveedor=$_REQUEST['proFac'];
 $fecha=$_REQUEST['fechaFac'];
 $subtotal=$_REQUEST['modSubT'];
@@ -57,7 +57,7 @@ $total=$_REQUEST['modTotal'];
 
 	//Actualizando  FACTURA
 	//INSERT INTO `scipgi`.`factura` (`fk_usuariosFactura`, `serie`, `folio`, `fkProveedor`, `subtotal`, `total`, `fkEstadoSaliente`, `fechaFac`) VALUES ('11', 'oi', 'oi', '7', '98', '89', '1', '2014-12-12');
-	$sql="UPDATE  `scipgi`.`factura` SET `fk_usuariosFactura`=$userID, `serie`='$serie', `folio`='$folio', `fkProveedor`=$proveedor, `subtotal`='$subtotal', `total`='$total', `fechaFac`='$fecha',proyecto='$proyecto',fkPartida=$partida,tipo='$tipo'  WHERE pkFactura=".$pkFac;
+	$sql="UPDATE  `scipgi`.`factura` SET `fk_usuariosFactura`=$userID, `serie`='$serie', `folio`='$folio', `fkProveedor`=$proveedor, `subtotal`='$subtotal', `total`='$total', `fechaFac`='$fecha',proyecto='$proyecto',tipo='$tipo'  WHERE pkFactura=".$pkFac;
 	$mysql->insUpdDel($sql);
 
 	// ACTUALIZANDO LOS DETALLES DE LA FACTURA
@@ -65,10 +65,27 @@ $total=$_REQUEST['modTotal'];
 	// $rsFac=$mysql->consultas($sql2);
 	// $regFac=mysqli_fetch_array($rsFac);
 	//INSERT INTO `scipgi`.`detallefactura` (`fkFactura`, `cantidad`, `descripcion`, `precioUnitario`, `iva`, `importe`, `masIva`, `fkEstadoInventario`) VALUES ('1', $cantidad[$x], '$descripcion[$x]', $pUnitario[$x],$iva[$x],$importe[$x],$masIVA[$x],1);
+	
+	$sqlPartida="DELETE FROM factura_catpartida WHERE factura_pkFactura=$pkFac;";
+	$mysql->insUpdDel($sqlPartida);
+
+	for ($i=0; $i <count($partida) ; $i++) { 
+		$sqlInPartida="INSERT INTO `scipgi`.`factura_catpartida` (`factura_pkFactura`, `catPartida_pkPartida`) VALUES($pkFac,$partida[$i])";
+		$mysql->insUpdDel($sqlInPartida);
+	}
+
+	$sqldelDetalle="DELETE FROM detallefactura WHERE fkFactura=$pkFac;";
+	$mysql->insUpdDel($sqldelDetalle);
+
 	for($x=0;$x<count($cantidad);$x++)
 	{
-		$sql3="UPDATE `scipgi`.`detallefactura` SET `fkFactura`=$pkFac, `cantidad`=$cantidad[$x],`unidad`='$unidad[$x]', `descripcion`='$descripcion[$x]',`precioUnitario`='$pUnitario[$x]', `iva`='$iva[$x]', `importe`='$importe[$x]', `masIva`='$masIVA[$x]', `fkEstadoInventario`=1 WHERE pkDetalleFactura=$idsDetalles[$x];";
+		$sql3="INSERT INTO `scipgi`.`detallefactura` (`fkFactura`, `cantidad`,`unidad`, `descripcion`, `precioUnitario`, `iva`, `importe`, `masIva`, `fkEstadoInventario`) VALUES ($pkFac, $cantidad[$x],'$unidad[$x]', '$descripcion[$x]', '$pUnitario[$x]','$iva[$x]','$importe[$x]','$masIVA[$x]',1);";
 		$mysql->insUpdDel($sql3);	
 	}
+	// for($x=0;$x<count($cantidad);$x++)
+	// {
+	// 	$sql3="UPDATE `scipgi`.`detallefactura` SET `fkFactura`=$pkFac, `cantidad`=$cantidad[$x],`unidad`='$unidad[$x]', `descripcion`='$descripcion[$x]',`precioUnitario`='$pUnitario[$x]', `iva`='$iva[$x]', `importe`='$importe[$x]', `masIva`='$masIVA[$x]', `fkEstadoInventario`=1 WHERE pkDetalleFactura=$idsDetalles[$x];";
+	// 	$mysql->insUpdDel($sql3);	
+	// }
 	echo "MENSAJE."
  ?>

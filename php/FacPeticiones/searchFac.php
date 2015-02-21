@@ -1,6 +1,6 @@
 <?php 	
 	include_once "../crearConexion.php";
-	$folioSerie=$_REQUEST['serieFolio'];
+	$folioSerie=$_REQUEST['id'];
 
 	$sql="SELECT * FROM factura WHERE serie='$folioSerie' || folio='$folioSerie'";
 	$factura=$mysql->consultas($sql);
@@ -11,26 +11,21 @@
 	$arrayFac[3]=$datosFac['folio'];
 	$arrayFac[4]=$datosFac['fkProveedor'];
 	$arrayFac[5]=$datosFac['proyecto'];
-	// $arrayFac[6]=$datosFac['fkPartida'];
-	
-	$sqlPartida = "SELECT catPartida_pkPartida,numeroPartida FROM factura_partida
-					INNER JOIN catpartida ON catPartida_pkPartida=pkPartida
-					WHERE factura_pkFactura=".$datosFac['pkFactura'];
-	$rsPartidas=$mysql->consultas($sqlPartida);
 
-	$par=0;
-	while ($rowPartidas= mysqli_fetch_row($rsPartidas)) {
-		$arrayPartidas[$par]['partida']= $rowPartidas[0];
-		$arrayPartidas[$par]['numero']= $rowPartidas[1];
-		$par++;
+	$sqlPartida ="SELECT numeroPartida, catPartida_pkPartida FROM factura_catpartida
+				INNER JOIN catpartida ON catPartida_pkPartida = pkPartida
+				WHERE factura_pkFactura=$arrayFac[1]";
+	$rsPArtidas =$mysql->consultas($sqlPartida);
+
+	$z=0;
+	while ($rowPartida=mysqli_fetch_row($rsPArtidas)) {
+		$arrayPartida[$z]['partida']=$rowPartida[1];
+		$arrayPartida[$z]['numero']=$rowPartida[0];//por la consulta anteriror pongo en este orden el indice dle arreglo
+		$z++;
 	}
-	// print_r($rsPartidas);
-	// echo "<pre>";
-	// print_r($arrayPartidas);
-	// echo "</pre>";
+	$arrayFac[6]=$arrayPartida;
 
-	 json_encode($arrayPartidas);
-	$arrayFac[6]=$arrayPartidas;
+
 	$arrayFac[7]=$datosFac['fechaFac'];
 	$arrayFac[8]=$datosFac['subtotal'];
 	$arrayFac[9]=$datosFac['total'];

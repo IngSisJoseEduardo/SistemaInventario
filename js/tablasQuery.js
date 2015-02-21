@@ -59,7 +59,7 @@ $('#facPagFin').ready(function() {//INICIO TABLA DE PAGOS FIANANCIEROS
 		            { "data": "subtotal" },
 					{ "data": "total" },
 					{ "data": "fecha" },
-					// { "data": "partida" },
+					{ "data": "partida" },
 					{ "data": "proyecto" },
 					{ "data": "clave" },
 					{ "data": "descripcion" },

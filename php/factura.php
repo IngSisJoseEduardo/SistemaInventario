@@ -292,21 +292,17 @@
                                                   <option value="Remision">Remision</option>
                                                 </select>
                                               </div>
-                                              <div class="col-md-6">
-                                                  <div class="input-group">
-                                                    <input type="text" class="form-control" id="partidaA" placeholder="Busque una Partida">
-                                                    <span class="input-group-addon"> <input type="button" value="Buscar" id="busquedaPar" ></span>
-                                                  </div>
+
+                                              <!-- INPUT PARA BUSCAR LAS PARTIDAS -->
+                                              <div class="col-lg-6">
+                                                <div class="input-group">
+                                                  <input type="text" class="form-control" placeholder="Ingrese una partida" aria-describedby="basic-addon2" id="busquedaPartidaFac">
+                                                  <span class="input-group-addon" id="basic-addon2"> <input type="button" value="Buscar" id="btnBuscarFac" class="btn btn-primary btn-xs" onclick="agregandoPartidaFac();"> </span>
+                                                </div>
                                               </div>
+                                              <!-- END BUSQUEDA PARTIDA -->
                                             </div>
-                                            <!-- <label for="tipo">Tipo</label>
-                                              <select name="tipo" id="slTipo" required>
-                                              <option value="">Seleccione un tipo de factura..</option>
-                                              <option value="Factura">Factura</option>
-                                              <option value="Remision">Remision</option>
-                                            </select> -->
-                                   <!--        <input type="radio" name="tipo"  value="Factura" checked="true">Factura
-                                          <input type="radio" name="tipo"  value="Remision">Nota Remision -->
+                
                                           <input type="hidden" name="usuarioFac" value="<?php echo $_SESSION['id'] ?>">
                                             <div class="panel-body"><!--PANEL DEL SELECT-->
                                               <div class="form-group col-md-6"><!--SELECT PROVEEDOR-->
@@ -333,12 +329,8 @@
                                                 <div class="form-group">
                                                   <div class="input-group input-group">
                                                     <span class="input-group-addon">&nbsp;  Partida  &nbsp;</span>
-                                                    <select name="partidaFac[]" class="form-control" id="slPartidaFac2" multiple required readonly>
+                                                    <select name="partidaFac[]" class="form-control" id="slPartidaFac" multiple="multiple">
                                                         <!--opciones cargadas con ajax-->
-                                                      <!--   <option value="1">algo</option>
-                                                        <option value="2">algo</option>
-                                                        <option value="3">algo</option>
-                                                        <option value="4">algo</option> -->
                                                     </select>
                                                   </div>
                                                 </div>
@@ -357,23 +349,12 @@
                                                   </div>
                                                   <input type="hidden" name="subT">
                                                   <input type="hidden" name="total">
-                                            </div>
-                                             <div class="row">
-                                                         <div class="col-md-2" >
-                                                            <input type="number" class="form-control" id="cantRow" min="1">
-                                                        </div>
-                                                        <div>
-                                                          <input type="button" class="btn btn-info " id="btnDetalle"  value="Agregar Detalle">
-                                                          <!--<input type="button" class="btn btn-warning" style="margin-top:5%;" value="Calcular Total" id="btnCalcularTotal">-->
-                                                          <input type="button" class="btn btn-danger"  value="Cancelar" id="btnCancelarFac">
-                                                          <input type="submit" class="btn btn-success"  value="Guardar" id="btnGuardarFac" onSubmit="return False">
-                                                        </div>
-                                            </div>
-                                                <!-- <div class="col-lg-6">
-                                                  <label>Agregar deciamles</label>
-                                                  <input type="checkbox" name="chceros" id="idchceros"><input type="text" name="ceros" id="idceros"  size="2" value="0" disabled>
-                                                </div> -->
-
+                                                </div>
+                                                <div class="col-md-2" ><input type="number" class="form-control" id="cantRow" min="1"></div>
+                                                <input type="button" class="btn btn-info " id="btnDetalle"  value="Agregar Detalle">
+                                                <!--<input type="button" class="btn btn-warning" style="margin-top:5%;" value="Calcular Total" id="btnCalcularTotal">-->
+                                                <input type="button" class="btn btn-danger"  value="Cancelar" id="btnCancelarFac">
+                                                <input type="submit" class="btn btn-success"  value="Guardar" id="btnGuardarFac" onSubmit="return False">
                                             </div><!--END PANEL DEL SELECT-->
                                             <div class="panel-body" style="height:300px;overflow-y:scroll;"><!--TABLA DETALLE FACTURA-->
                                                 <table class="table table-striped table-bordered table-hover" id="tablaProveedores">

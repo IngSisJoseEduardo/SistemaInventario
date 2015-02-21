@@ -110,7 +110,7 @@ function buscarFactura()
 	$.ajax({
 		type:"POST",
 		url:"FacPeticiones/searchFac.php",
-		data:{serieFolio:datoBusqueda},
+		data:{id:datoBusqueda},
 		dataType:'json',
 		success:function(respuesta){
 			// $('#btnModificarFac').attr('disabled',false);
@@ -121,9 +121,10 @@ function buscarFactura()
 			$('#modProyectoFac').val(respuesta[5]);
 
 			for (var i = 0; i < respuesta[6].length; i++) {
-			$('#modSlPartidaFac').append('<option  value="'+respuesta[6][i].partida+'" selected>'+respuesta[6][i].numero+'</option>')
+			$('#modSlPartidaFac').append('<option value="'+respuesta[6][i].partida+'" selected>'+respuesta[6][i].numero+'</option>')
+				// respuesta[6][i]
 			};
-						
+
 			$('#modFechaFac').val(respuesta[7]);
 			$('#modTotal').html('<div style="margin-top:-1.5%;"><h3>Subtotal:$'+respuesta[8]+' m/n </h3><h3>Total:$'+respuesta[9]+' m/n</h3></div>');
 			$('#modSubT').val(respuesta[8]);

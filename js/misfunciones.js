@@ -1,9 +1,7 @@
-$(document).ready(function(e) 
+	$(document).ready(function(e) 
 	{
-
 		$('#partidas').hide();
 		$('#contenedorModificarPar').hide();
-
 		$('#idSalidas').click(function(){
 			$('#contenedorSalidas').show();
 			$('#partidas').hide();
@@ -11,51 +9,6 @@ $(document).ready(function(e)
 		$('#idPartidasSal').click(function(){
 			$('#contenedorSalidas').hide();
 			$('#partidas').show();
-		});
-
-		// FUNCION DE AREGAR LOS DIGITOS DESPUES DEL pUnitario
-		// $('#idchceros').click(function() {
-		// 	if($(this).is(':checked'))
-		// 	{
-		// 		$('#idceros').removeAttr('disabled');
-		// 	}
-		// 	else{
-		// 		$('#idceros').attr('disabled', 'true');
-		// 	}
-		// });
-
-
-
-		// BUSCANDO LAS PARTIDAS QUE SE AGREGRAN A LA FACTURA
-		$('#busquedaPar').click(function() {
-			par = $('#partidaA').val();
-			// alert(par);
-			$.ajax({
-				url: 'FacPeticiones/agregandoPartida.php',
-				type: 'POST',
-				dataType:'json',
-				data: {partida:par},
-			})
-			.done(function(respuesta) {
-				if (respuesta!=null) 
-					{
-						$('#slPartidaFac2').append('<option value="'+respuesta[0]+'" selected>'+respuesta[1]+'</option>');	
-					}
-					else
-					{
-						alert('¡La partida no existe!');
-					}
-
-				// alert(respuesta[1]);
-			})
-			.fail(function() {
-				console.log("error");
-			})
-			.always(function() {
-				// console.log("complete");
-				$('#partidaA').val("");
-			});
-			
 		});
 
 		//COMPROBANDO EL NICK DE NUEVO USUARIO
@@ -280,18 +233,18 @@ $(document).ready(function(e)
 						}
 					}
 				});
-				$.ajax({
-					type:"POST",
-					dataType:"json",
-					url:"FacPeticiones/partidas.php",
-					success:function(respuesta){
-						$('#slPartidaFac').append("<option value=''>Seleccione una Partida...</option>");
-						for(i=0;i<respuesta.length;i++)
-						{
-							$('#slPartidaFac').append('<option value="'+respuesta[i].pkPartida+'" data-indice="'+i+'">'+respuesta[i].numeroPartida+'</option>');
-						}
-					}
-				});
+				// $.ajax({
+				// 	type:"POST",
+				// 	dataType:"json",
+				// 	url:"FacPeticiones/partidas.php",
+				// 	success:function(respuesta){
+				// 		$('#slPartidaFac').append("<option value=''>Seleccione una Partida...</option>");
+				// 		for(i=0;i<respuesta.length;i++)
+				// 		{
+				// 			$('#slPartidaFac').append('<option value="'+respuesta[i].pkPartida+'" data-indice="'+i+'">'+respuesta[i].numeroPartida+'</option>');
+				// 		}
+				// 	}
+				// });
 			});
 			//mostrando modificar factura
 			$('#btnModificarFac').click(function(){
@@ -299,7 +252,7 @@ $(document).ready(function(e)
 				$('#contenedorF').hide();
 				$('#contenedorPar').hide();
 				$('#contenedorModificarPar').show();
-				listProveedor();
+				listarproveedores();
 			});
 			//mostrando contenedor 1 de proveedor AL DAR CLCICK EN PROVEEDOR	
 			$('#btnProveedor').click(function(){
@@ -338,20 +291,20 @@ $(document).ready(function(e)
 			});
 			//END RPOVEEDORES EN FACTURA
 			// MOSTRANDO LAS PARTIDAS EN LA FACTURA
-			$('#slPartidaFac').ready(function(){
-				$('#slPartidaFac').append("<option value=''>Seleccione una Partida...</option>");
-				$.ajax({
-					type:"POST",
-					dataType:"json",
-					url:"FacPeticiones/partidas.php",
-					success:function(respuesta){
-						for(i=0;i<respuesta.length;i++)
-						{
-							$('#slPartidaFac').append('<option value="'+respuesta[i].pkPartida+'" data-indice="'+i+'">'+respuesta[i].numeroPartida+'</option>');
-						}
-					}
-				});
-			});
+			// $('#slPartidaFac').ready(function(){
+			// 	$('#slPartidaFac').append("<option value=''>Seleccione una Partida...</option>");
+			// 	$.ajax({
+			// 		type:"POST",
+			// 		dataType:"json",
+			// 		url:"FacPeticiones/partidas.php",
+			// 		success:function(respuesta){
+			// 			for(i=0;i<respuesta.length;i++)
+			// 			{
+			// 				$('#slPartidaFac').append('<option value="'+respuesta[i].pkPartida+'" data-indice="'+i+'">'+respuesta[i].numeroPartida+'</option>');
+			// 			}
+			// 		}
+			// 	});
+			// });
 			//EN PARTIDAS EN FACTURA
 			//AGREGANDO DATATABLE A TABLA
 				$('#tablaProveedores').ready(function(){
@@ -480,34 +433,19 @@ $(document).ready(function(e)
 	           		{
 	           			var rowDetalle="";
 	           			contador+=1;
-		           		rowDetalle+='<tr id="dRow'+contador+'"><td><input type="text" name="cantidad'+contador+'"  min="1" class="form-control number" placeholder="Cantidad" size="5" required></td>';
+		           		rowDetalle+='<tr id="dRow'+contador+'"><td><input type="text" name="cantidad'+contador+'"  min="1" class="form-control number" placeholder="Cantidad" size="5"   required></td>';
 		           		rowDetalle+='<td><input type="text" name="unidad'+contador+'" class="form-control" required></td>';
 		           		rowDetalle+='<td><textarea name="descripcion'+contador+'" class="form-control" cols="40" rows="3" placeholder="Descripción" required></textarea></td>';
-		           		rowDetalle+='<td><input type="text" name="pUnitario'+contador+'"  class="form-control" placeholder="P.Unitario" size="5" required></td>';
-		           		rowDetalle+='<td><input type="text" name="ivaB'+contador+'"  class="form-control" placeholder="IVA" size="5"  required></td>';
-		           		rowDetalle+='<td><input type="text" name="importe'+contador+'" min="1" value="0.00" class="form-control subtotal number2" onblur="importe('+contador+');" placeholder="Importe" size="5" required></td>';
-		           		rowDetalle+='<td><input type="text" name="ivaD'+contador+'" min="1" value="0.00" class="form-control total number2" onblur="importe('+contador+');" placeholder="+IVA" size="5"></td>';
+		           		rowDetalle+='<td><input type="text" name="pUnitario'+contador+'" min="1" class="form-control number2" placeholder="P.Unitario" size="5"  required></td>';
+		           		rowDetalle+='<td><input type="text" name="ivaB'+contador+'" min="1" value="0.00" class="form-control number2" placeholder="IVA" size="5" required></td>';
+		           		rowDetalle+='<td><input type="text" name="importe'+contador+'" min="1" value="0.00" class="form-control subtotal number2" placeholder="Importe" size="5" required></td>';
+		           		rowDetalle+='<td><input type="text" name="ivaD'+contador+'" min="1" value="0.00" class="form-control total number2" placeholder="+IVA" size="5"></td>';
 		           		rowDetalle+='<td><input type="button" value="-" class="btn btn-danger"  onclick="eliminarDetalleFac('+contador+');"></td></tr>';
 		           		$('#tbDetalle').append(rowDetalle);
 		           		
            			}
-      //      			$('.number').number( true, 0);
-
-      //      			// COLOCANDO LA CANTIDAD DE DECIMALES
-      //      			dig = $('#idceros').val();
-      //      			// alert(dig);
-      //      			if(dig!=0)
-      //      			{
-						// decimalesNumber =dig;
-						// decimalesFixed  =dig;
-	     //       			$('.number2').number( true, decimalesNumber); //COLOCANDO EL NUMERO DE DECIAMALES INDICADO 
-	     //       			//alert(dig);  				
-
-      //      			}
-      //      			else{
-	           			
-	     //       			$('.number2').number( true,2);   //POR DEFECTO SE MUESTRAN DOS DECIMALES 				
-      //      			}
+           			$('.number').number( true, 0);
+           			// $('.number2').number( true, 2);
 
 
            		}
@@ -526,8 +464,7 @@ $(document).ready(function(e)
            			$('#tbDetalle').empty();
 	           		contador=0;
 	           		$('#slPro option')[0].selected = true;//SELECCIOANDNO AL INDICE CERO DEL SELECT PROVEEDORES
-	           		// $('#slPartidaFac2 option')[0].selected = true;
-	           		$('#slPartidaFac2').html("");
+	           		$('#slPartidaFac option')[0].selected = true;
 	           		//LIMPIANDO ELEMENTOS DEL FORM
 	           		$('#folioFac').val("");
 	           		$('#serieFac').val("");
@@ -557,15 +494,14 @@ $(document).ready(function(e)
            		}
            		else
            		{
-           			$('input[name=subT]').val(totalI,2);
-           			$('input[name=total]').val(totalFN,2);
+           			$('input[name=subT]').val($.number(totalI,2));
+           			$('input[name=total]').val($.number(totalFN,2));
            			//var nuevaFac=$('#nFactura').serialize();
            			//alert(nuevaFac);
 					var formData = new FormData($("#nFactura")[0]);
-
+           			
            			$.ajax({
 						url:"FacPeticiones/registroFac.php",
-						// url:"FacPeticiones/pruebasdetodo.php",
 						type:"POST",
 						data: formData,
 						//necesario para enviarFormulario
@@ -587,7 +523,7 @@ $(document).ready(function(e)
 								$('#tbDetalle').empty();
 								contador=0;
 								$('#slPro option')[0].selected = true;//SELECCIOANDNO AL INDICE CERO DEL SELECT PROVEEDORES
-								$('#slPartidaFac2').html(" ");
+								$('#slPartidaFac').empty();
 								//LIMPIANDO ELEMENTOS DEL FORM
 								$('#folioFac').val("");
 								$('#serieFac').val("");
@@ -597,6 +533,7 @@ $(document).ready(function(e)
 								totalI=0.0;//guardara importe din iva
 								totalFN=0.0;//guardara importe con iva
 								$('#notPen').html('12');
+								$('#busquedaPartidaFac').val("");
 							}
 						}
 					});
@@ -751,44 +688,72 @@ function darSalida(id)
 		});
 }
 //CALCULANDO IMPORTE DEL DETALLE	
-function importe(id)
+function importe(id,tipo)
 {
-	// OBTENIENDO LOS VALORES NECESARIOS PARA LOS CALCULOS
-	// cantidadDet       = parseFloat($('input[name=cantidad'+id+']').val());//obteniendo valor de cantidad
-	// precioUnitarioDet = parseFloat($('input[name=pUnitario'+id+']').val());//obteniendo valor de Precio Unitario
-	// ivaDet            = parseFloat($('input[name=ivaB'+id+']').val());//obteniendo valor del iva
+	
+	//REALIZANDO CALCULOS DE IMPORTE,IVA,IMPORTE MAS IVA
 
-	// // // CALCLANDO LOS IMPORTES
-	// // // IMPORTE SIN IVA
-	// importeDet = (cantidadDet*precioUnitarioDet);
+	cantidad=$('input[name=cantidad'+id+']').val();//obteniendo valor de cantidad
+	pUnitario=$('input[name=pUnitario'+id+']').val();//obteniendo valor de Precio Unitario
 
-	// ivaplusimporte = (precioUnitarioDet+ivaDet)*cantidadDet;
+	iva=pUnitario*0.16;//obteninedo el iva a 16%
+	iva=iva.toFixed(2);//REDONDENADO IVA A DOS DECIMALES
 
-	// $('input[name=importe'+id+']').val(importeDet);
-	// $('input[name=ivaD'+id+']').val(ivaplusimporte);
+	cImporte=(cantidad*pUnitario);//calculando importe sin iva
+	masIva=cImporte+(cantidad*iva);//calculando importe mas iva
+	//REDONDENADO IMPORTE E IMPORTE(+)IVA
+	cImporte=cImporte.toFixed(2);
+	masIva=masIva.toFixed(2);
+
+	//COLOCANDO CALCULOS EN CAMPOS IVA, IMPORTE, IMPORTE+IVA
+
+	cantidad=parseFloat($('input[name=cantidad'+id+']').val());
+	pUnitario=parseFloat($('input[name=pUnitario'+id+']').val());
+	iva=pUnitario*0.16;
+
+	cantidad=cantidad.toFixed(2);
+	pUnitario=pUnitario.toFixed(2);
+	iva=iva.toFixed(2);
+	
+	cImporte=(cantidad*pUnitario);
+	masIva=(cImporte+(cantidad*iva));
+	masIva=masIva.toFixed(2);
+
+	//COLOCANDO CALCULOS EN CAMPOS IVA, IMPORTE, +IVA
+
+	$('input[name=ivaB'+id+']').val(iva);
+	$('input[name=importe'+id+']').val(cImporte);
+	$('input[name=ivaD'+id+']').val(masIva);
+
+	//CALCULANDO Y MOSTRNADO TOTALES
+
+	totalImporte=0.0;//guardara importe din iva
+	totalFinal=0.0;//guardara importe con iva
+	
 	//OBTENIENDO TODOS LOS IMPORTES
-	totalImporte=0;
-	totalI=0;
 	$('.subtotal').each(function(){
 		var sub=parseFloat($(this).val());//OBTENIENDO EL VALOR DE TODOS LOS IMPORTES
-		totalImporte+=sub;//SUMANDO TODOS LOS IMPORTES
-		totalI=totalImporte;
-		// alert(totalI);
+		totalImporte=totalImporte+sub;//SUMANDO TODOS LOS IMPORTES
+		totalI=totalImporte.toFixed(2);
 		//totalImporte=totalImporte.toFixed(2)//REDONDENDO A DOS DECIMALES EL TOTAL
 	});
 	//OBTENIENDO TODOS LOS IMPORTES +IVA
-	totalFinal=0;
-	totalFN=0;
 	$('.total').each(function(){
 		var totalF=parseFloat($(this).val());//OBTENIENDO TODOS LOS IMPORTES
-		totalFinal+=totalF;//SUMANDO TODOS LOS IMPORTES
-		totalFN=totalFinal;
+		totalFinal=totalFinal+totalF;//SUMANDO TODOS LOS IMPORTES
+		totalFN=totalFinal.toFixed(2);
 		//totalFinal=totalFinal.toFixed(2);//REDONDEANDO A DOS DECIMALES EL TOTAL
-		// alert(totalFN);
 	});
 	//AL AGREGAR LAS CANTIDADES Y PRECIOS UNITARIOS SE MOSTRARA AUTOMATICAMENTE EL TOTEL DE A PAGAR
-	$('#total').html('<div style="margin-top:-1.5%;"><h3>Subtotal:$'+totalI+' m/n</h3><h3>Total:$'+totalFN+' m/n</h3></div>');
-	// alert(id);
+	if(tipo==1)
+	{
+		$('#total').html('<div style="margin-top:-1.5%;"><h3>Subtotal:$'+$.number(totalI,2)+' m/n</h3><h3>Total:$'+$.number(totalFN,2)+' m/n</h3></div>');
+	}
+	else if(tipo==2)
+	{
+		$('#modTotal').html('<div style="margin-top:-1.5%;"><h3>Subtotal:$'+$.number(totalI,2)+' m/n</h3><h3>Total:$'+$.number(totalFN,2)+' m/n</h3></div>');	
+	}
+	           
 }
 //fin IMPORTE DEL DETALLE	
 
@@ -1580,19 +1545,42 @@ function editResetPertida()
 	$('#edNumPartida').val("");
 	$('#idDesPartida').val("");
 }
-function listProveedor(){
-	$('#modSlPro').html("");
+
+function listarproveedores()
+{
 	$.ajax({
 		type:"POST",
 		data:{opcion:1},
 		dataType:"json",
 		url:"FacPeticiones/tablaProveedores.php",
 		success:function(respuesta){
+			$('#modSlPro').empty();
 			$('#modSlPro').append("<option value=''>Seleccione un Proveedor...</option>");
 			for(y=0;y<=respuesta.length;y++)
 			{
 				$('#modSlPro').append("<option value='"+respuesta[y][4]+"'>"+respuesta[y][0]+"</option>");
 			}
+		}
+	});
+}
+function agregandoPartidaFac()
+{
+	valor = $('#busquedaPartidaFac').val();
+	$.ajax({
+		type:"POST",
+		dataType:"json",
+		url:"FacPeticiones/agregandoPartida.php",
+		data:{param1:valor},
+		success:function(respuesta){
+			if (respuesta=="error") {
+				alert("¡La partida no existe!");
+			} else{
+				$('#slPartidaFac').append('<option value="'+respuesta[0]+'" selected>'+respuesta[1]+'</option>');
+			};
+		},
+		error:function()
+		{
+			alert('error');
 		}
 	});
 }
