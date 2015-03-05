@@ -59,6 +59,8 @@
 <script src="../js/timer.js"></script>
 <script src="../js/tablasQuery.js"></script>
 <script src="../js/modificaciones.js"></script>
+<!-- <script src="../js/math.js"></script> -->
+
 
 </head>
 <body background="../img/tiny_grid.png" style="background-attachment: fixed;">
@@ -352,9 +354,10 @@
                                                 </div>
                                                 <div class="col-md-2" ><input type="number" class="form-control" id="cantRow" min="1"></div>
                                                 <input type="button" class="btn btn-info " id="btnDetalle"  value="Agregar Detalle">
-                                                <!--<input type="button" class="btn btn-warning" style="margin-top:5%;" value="Calcular Total" id="btnCalcularTotal">-->
                                                 <input type="button" class="btn btn-danger"  value="Cancelar" id="btnCancelarFac">
                                                 <input type="submit" class="btn btn-success"  value="Guardar" id="btnGuardarFac" onSubmit="return False">
+                                                <div class="col-lg-2"><input type="button" class="btn btn-warning" value="Remover Partidas" style="margin-top:10px;" onclick="quitarPartidas();"></div>
+
                                             </div><!--END PANEL DEL SELECT-->
                                             <div class="panel-body" style="height:300px;overflow-y:scroll;"><!--TABLA DETALLE FACTURA-->
                                                 <table class="table table-striped table-bordered table-hover" id="tablaProveedores">

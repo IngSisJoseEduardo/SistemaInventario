@@ -17,12 +17,12 @@
           <!-- <label for="factura">Factura:</label><input type="text" id="campoBus" placeholder="Serie/Folio" ><button id="btnBuscarFac" onclick="buscarFactura();">Buscar</button> -->
         </form>
       </div>
-      <div id="FacturaMod">
+      <div id="FacturaMod" >
           <div>
                                 <div id="alertModFac"></div>
                                    <div class="col-md-12" style="margin-top:1em;">
                                       <div class="panel panel-default">
-                                        <div class="panel-body"><!--CUERPO FACTURA-->
+                                        <div class="panel-body" style="background-color:#B1D6D8;"><!--CUERPO FACTURA-->
                                           <form  role="form" action="" id="editFactura" onsubmit="return false">
                                           <div class="row">  
                                             <div class="input-group col-md-6">
@@ -33,6 +33,14 @@
                                                 <option value="Remision">Remision</option>
                                               </select>
                                             </div>
+                                            <!-- INPUT PARA BUSCAR LAS PARTIDAS -->
+                                              <div class="col-lg-6">
+                                                <div class="input-group">
+                                                  <input type="text" class="form-control" placeholder="Ingrese una partida" aria-describedby="basic-addon2" id="modbusquedaPartidaFac">
+                                                  <span class="input-group-addon" id="basic-addon2"> <input type="button" value="Buscar" id="btnBuscarFac" class="btn btn-primary btn-xs" onclick="modagregandoPartidaFac();"> </span>
+                                                </div>
+                                              </div>
+                                              <!-- END BUSQUEDA PARTIDA -->
                                           </div>
                                           <!-- <label for="tipo">Tipo</label> -->
 
@@ -86,12 +94,11 @@
                                                   <input type="hidden" name="modTotal" id="modT">
                                                   <input type="hidden" name="modPkFac" id="modPkFac">
                                                 </div>
-                                                <!-- <div class="col-md-2" ><input type="number" class="form-control" id="detalleNum" min="1"></div> -->
-                                                <!-- <input type="button" class="btn btn-info "   value="Agregar Detalle" onclick="detalleModFac();"> -->
-                                                <!--<input type="button" class="btn btn-warning" style="margin-top:5%;" value="Calcular Total" id="btnCalcularTotal">-->
-                                                <!-- <input type="button" class="btn btn-default" value="Recalcular" onclick=""> -->
+                                                <div class="col-md-2" ><input type="number" class="form-control" id="detalleNum" min="1"></div>
+                                                <input type="button" class="btn btn-info "   value="Agregar Detalle" onclick="detalleModFac();">
                                                 <input type="button" class="btn btn-danger"  value="Cancelar" onclick="cancelarModFac();">
                                                 <input type="submit" class="btn btn-success"  value="Guardar" id="btnModificarFac" onSubmit="return False" >
+                                                <div class="col-lg-2"><input type="button" class="btn btn-warning" value="Remover Partidas" style="margin-top:10px;" onclick="removerPartidas();"></div>
                                             </div><!--END PANEL DEL SELECT-->
                                             <div class="panel-body" style="height:300px;overflow-y:scroll;"><!--TABLA DETALLE FACTURA-->
                                                 <table class="table table-striped table-bordered table-hover" >
@@ -104,7 +111,7 @@
                                                           <th>IVA</th>
                                                           <th>Importe</th>
                                                           <th>Importe(+IVA)</th>
-                                                          <!-- <th>Remover</th> -->
+                                                          <th>Remover</th>
                                                             <!--<th>Operaciones</th>-->
                                                         </tr>
                                                     </thead>

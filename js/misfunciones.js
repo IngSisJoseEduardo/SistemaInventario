@@ -1,5 +1,7 @@
+var totalI       = 0;//formatenado los totales
+var totalFN      = 0;
 	$(document).ready(function(e) 
-	{
+	{	
 		$('#partidas').hide();
 		$('#contenedorModificarPar').hide();
 		$('#idSalidas').click(function(){
@@ -437,9 +439,9 @@
 		           		rowDetalle+='<td><input type="text" name="unidad'+contador+'" class="form-control" required></td>';
 		           		rowDetalle+='<td><textarea name="descripcion'+contador+'" class="form-control" cols="40" rows="3" placeholder="Descripción" required></textarea></td>';
 		           		rowDetalle+='<td><input type="text" name="pUnitario'+contador+'" min="1" class="form-control number2" placeholder="P.Unitario" size="5"  required></td>';
-		           		rowDetalle+='<td><input type="text" name="ivaB'+contador+'" min="1" value="0.00" class="form-control number2" placeholder="IVA" size="5" required></td>';
-		           		rowDetalle+='<td><input type="text" name="importe'+contador+'" min="1" value="0.00" class="form-control subtotal number2" placeholder="Importe" size="5" required></td>';
-		           		rowDetalle+='<td><input type="text" name="ivaD'+contador+'" min="1" value="0.00" class="form-control total number2" placeholder="+IVA" size="5"></td>';
+		           		rowDetalle+='<td><input type="text" name="ivaB'+contador+'" min="1"  class="form-control number2" placeholder="IVA" size="5" required></td>';
+		           		rowDetalle+='<td><input type="text" name="importe'+contador+'" min="1" value="0" class="form-control subtotal number2" placeholder="Importe" size="5" onblur="importe(1);" required></td>';
+		           		rowDetalle+='<td><input type="text" name="ivaD'+contador+'" min="1" value="0" class="form-control total number2" placeholder="+IVA" size="5" onblur="importe(2);" required></td>';
 		           		rowDetalle+='<td><input type="button" value="-" class="btn btn-danger"  onclick="eliminarDetalleFac('+contador+');"></td></tr>';
 		           		$('#tbDetalle').append(rowDetalle);
 		           		
@@ -464,7 +466,8 @@
            			$('#tbDetalle').empty();
 	           		contador=0;
 	           		$('#slPro option')[0].selected = true;//SELECCIOANDNO AL INDICE CERO DEL SELECT PROVEEDORES
-	           		$('#slPartidaFac option')[0].selected = true;
+	           		$('#slPartidaFac').empty();
+	           		$('#busquedaPartidaFac').val("");
 	           		//LIMPIANDO ELEMENTOS DEL FORM
 	           		$('#folioFac').val("");
 	           		$('#serieFac').val("");
@@ -494,8 +497,8 @@
            		}
            		else
            		{
-           			$('input[name=subT]').val($.number(totalI,2));
-           			$('input[name=total]').val($.number(totalFN,2));
+           			$('input[name=subT]').val(totalI);
+           			$('input[name=total]').val(totalFN);
            			//var nuevaFac=$('#nFactura').serialize();
            			//alert(nuevaFac);
 					var formData = new FormData($("#nFactura")[0]);
@@ -688,71 +691,64 @@ function darSalida(id)
 		});
 }
 //CALCULANDO IMPORTE DEL DETALLE	
-function importe(id,tipo)
+function importe(opcion)
 {
-	
-	//REALIZANDO CALCULOS DE IMPORTE,IVA,IMPORTE MAS IVA
-
-	cantidad=$('input[name=cantidad'+id+']').val();//obteniendo valor de cantidad
-	pUnitario=$('input[name=pUnitario'+id+']').val();//obteniendo valor de Precio Unitario
-
-	iva=pUnitario*0.16;//obteninedo el iva a 16%
-	iva=iva.toFixed(2);//REDONDENADO IVA A DOS DECIMALES
-
-	cImporte=(cantidad*pUnitario);//calculando importe sin iva
-	masIva=cImporte+(cantidad*iva);//calculando importe mas iva
-	//REDONDENADO IMPORTE E IMPORTE(+)IVA
-	cImporte=cImporte.toFixed(2);
-	masIva=masIva.toFixed(2);
-
-	//COLOCANDO CALCULOS EN CAMPOS IVA, IMPORTE, IMPORTE+IVA
-
-	cantidad=parseFloat($('input[name=cantidad'+id+']').val());
-	pUnitario=parseFloat($('input[name=pUnitario'+id+']').val());
-	iva=pUnitario*0.16;
-
-	cantidad=cantidad.toFixed(2);
-	pUnitario=pUnitario.toFixed(2);
-	iva=iva.toFixed(2);
-	
-	cImporte=(cantidad*pUnitario);
-	masIva=(cImporte+(cantidad*iva));
-	masIva=masIva.toFixed(2);
-
-	//COLOCANDO CALCULOS EN CAMPOS IVA, IMPORTE, +IVA
-
-	$('input[name=ivaB'+id+']').val(iva);
-	$('input[name=importe'+id+']').val(cImporte);
-	$('input[name=ivaD'+id+']').val(masIva);
-
-	//CALCULANDO Y MOSTRNADO TOTALES
-
-	totalImporte=0.0;//guardara importe din iva
-	totalFinal=0.0;//guardara importe con iva
-	
-	//OBTENIENDO TODOS LOS IMPORTES
-	$('.subtotal').each(function(){
-		var sub=parseFloat($(this).val());//OBTENIENDO EL VALOR DE TODOS LOS IMPORTES
-		totalImporte=totalImporte+sub;//SUMANDO TODOS LOS IMPORTES
-		totalI=totalImporte.toFixed(2);
-		//totalImporte=totalImporte.toFixed(2)//REDONDENDO A DOS DECIMALES EL TOTAL
-	});
-	//OBTENIENDO TODOS LOS IMPORTES +IVA
-	$('.total').each(function(){
-		var totalF=parseFloat($(this).val());//OBTENIENDO TODOS LOS IMPORTES
-		totalFinal=totalFinal+totalF;//SUMANDO TODOS LOS IMPORTES
-		totalFN=totalFinal.toFixed(2);
-		//totalFinal=totalFinal.toFixed(2);//REDONDEANDO A DOS DECIMALES EL TOTAL
-	});
+	if(opcion == 1){
+		// alert('hola1');
+		totalI       = 0.0;
+		$('.subtotal').each(function(){
+			var sub=parseFloat($(this).val());//OBTENIENDO EL VALOR DE TODOS LOS IMPORTES
+			// alert(sub+"-"+totalI+"-");
+			$.ajax({
+				url: 'FacPeticiones/opermat.php',
+				type: 'POST',
+				dataType:'json',
+				data: {operacion:2,detallesb:sub,subtotal:totalI},
+			})
+			.done(function(respuesta) {
+				 	totalI        += respuesta[0];
+				 	// totalFN       = respuesta[1];
+				 	// alert(totalI);
+				 	$('#total').html('<h3>Subtotal:  $'+totalI+' m/n</h3><h3>Total:$'+totalFN+' m/n</h3>');
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+		});
+		// // totalImporte =	parseFloat($('input[name=importe'+id+']').val());
+	}
+	else if(opcion == 2){
+		// alert('hola2');
+		totalFN      = 0.0;
+		$('.total').each(function(){
+			var sub=parseFloat($(this).val());//OBTENIENDO EL VALOR DE TODOS LOS IMPORTES
+			// alert(sub+"-"+totalFN+"-");
+			$.ajax({
+				url: 'FacPeticiones/opermat.php',
+				type: 'POST',
+				dataType:'json',
+				data: {operacion:2,detallesb:sub,subtotal:totalFN},
+			})
+			.done(function(respuesta) {
+				 	totalFN        += respuesta[0];
+				 	// totalFN       = respuesta[1];
+				 	// alert(totalI);
+				 	$('#total').html('<h3>Subtotal:  $'+totalI+' m/n</h3><h3>Total:$'+totalFN+' m/n</h3>');
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+		});
+	}	
 	//AL AGREGAR LAS CANTIDADES Y PRECIOS UNITARIOS SE MOSTRARA AUTOMATICAMENTE EL TOTEL DE A PAGAR
-	if(tipo==1)
-	{
-		$('#total').html('<div style="margin-top:-1.5%;"><h3>Subtotal:$'+$.number(totalI,2)+' m/n</h3><h3>Total:$'+$.number(totalFN,2)+' m/n</h3></div>');
-	}
-	else if(tipo==2)
-	{
-		$('#modTotal').html('<div style="margin-top:-1.5%;"><h3>Subtotal:$'+$.number(totalI,2)+' m/n</h3><h3>Total:$'+$.number(totalFN,2)+' m/n</h3></div>');	
-	}
+
+	// $('#total').html('<div style="margin-top:-1.5%;"><h3>Subtotal:$'+totalI+' m/n</h3><h3>Total:$'+totalFN+' m/n</h3></div>');
 	           
 }
 //fin IMPORTE DEL DETALLE	
@@ -760,20 +756,37 @@ function importe(id,tipo)
 //ELIMINANDO DETALLE FACTURA
 function eliminarDetalleFac(id)
 {
-	//alert('eliminar');
+	// alert(id);
 		var menosSubtotal=0.0;
 		var menosTotal=0.0;
-		menosSubtotal=$('input[name=importe'+id+']').val();
-		menosTotal=$('input[name=ivaD'+id+']').val();
+		if(confirm("Este detalle sera eliminado.¿Desea continuar?")){
 
-		totalI-=menosSubtotal;
-		totalFN-=menosTotal;
-
-		totalI=totalI.toFixed(2);
-		totalFN=totalFN.toFixed(2);
-		//ACTUALIZANDO TOTAL
-		$('#total').html('<h3>Subtotal: $'+$.number(totalI,2)+' m/n</h3><h3>Total:$'+$.number(totalFN,2)+' m/n</h3>');
-		$('#dRow'+id).remove();
+			menosSubtotal = parseFloat($('input[name=importe'+id+']').val());
+			menosTotal    = parseFloat($('input[name=ivaD'+id+']').val());
+			// alert(totalI);
+			$.ajax({
+				url: 'FacPeticiones/opermat.php',
+				type: 'POST',
+				dataType:'json',
+				data: {operacion:1,sus1:menosSubtotal,sus2:menosTotal,sbtotal:totalI,total:totalFN},
+			})
+			.done(function(respuesta) {
+				// console.log(respuesta[0]);
+				// alert(respuesta[0]);
+				 	totalI        = respuesta[0];
+				 	totalFN       = respuesta[1];
+				 	$('#total').html('<h3>Subtotal: $'+totalI+' m/n</h3><h3>Total:$'+totalFN+' m/n</h3>');
+					$('#dRow'+id).remove();
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			
+			// //ACTUALIZANDO TOTAL
+		}
 }
 //END ELIMINADNO EL DETALLE DE LA FACTURA
 
@@ -1576,6 +1589,7 @@ function agregandoPartidaFac()
 				alert("¡La partida no existe!");
 			} else{
 				$('#slPartidaFac').append('<option value="'+respuesta[0]+'" selected>'+respuesta[1]+'</option>');
+				$('#busquedaPartidaFac').val("");
 			};
 		},
 		error:function()
@@ -1583,4 +1597,9 @@ function agregandoPartidaFac()
 			alert('error');
 		}
 	});
+}
+function quitarPartidas(){
+	if(confirm("Las partidas seran eliminadas.¿Desea Continuar?.")){
+		$('#slPartidaFac').empty();
+	}
 }
