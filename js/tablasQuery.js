@@ -76,11 +76,12 @@ $('#facPagFin').ready(function() {//INICIO TABLA DE PAGOS FIANANCIEROS
 		facPagF.fnReloadAjax();
 	});;
 } );
-function modalDetalles(facGeneral,detalles,totalDetalles)
+function modalDetalles(facGeneral,partidas,detalles,totalDetalles)
 {	
+	// alert(partidas[2]);
 	var tabFacGeneral="<table class='table table-bordered'>"+
-	"<tr><th>Folio</th><th>Serie</th><th>Proveedor</th><th>Subtotal</th><th>Total</th><th>Fecha</th></tr>"+
-	"<tr><th>"+facGeneral[2]+"</th><th>"+facGeneral[1]+"</th><th>"+facGeneral[3]+"</th><th>$"+facGeneral[4]+"</th><th>$"+facGeneral[5]+"</th><th>"+facGeneral[7]+"</th></tr></table>";
+	"<tr><th>Folio</th><th>Serie</th><th>Proveedor</th><th>Subtotal</th><th>Total</th><th>Fecha</th><th>Partidas</th></tr>"+
+	"<tr><th>"+facGeneral[2]+"</th><th>"+facGeneral[1]+"</th><th>"+facGeneral[3]+"</th><th>$"+facGeneral[4]+"</th><th>$"+facGeneral[5]+"</th><th>"+facGeneral[7]+"</th><th>"+partidas+"</th></tr></table>";
 	$('.facGral').html(tabFacGeneral);
 	var detallesFac="<table class='table table-striped table-hover'><thead><tr><th>Cantidad</th><th>Descripcion</th><th>Precio Unitario</th><th>IVA</th><th>Importe</th><th>Importe +IVA</th></tr></thead><tbody>";
 	for(i=0;i<totalDetalles;i++)

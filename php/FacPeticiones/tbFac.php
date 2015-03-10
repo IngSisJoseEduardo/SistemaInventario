@@ -63,11 +63,24 @@ class CFactura
 			
 		// 	//agregando detalles	
 		// 	$facturas[$x]['row']=$arrayDetalle;
+		 	$sqlpartidas="SELECT  catpartida.numeroPartida FROM factura
+							INNER JOIN factura_catpartida on factura_pkFactura= pkFactura
+							INNER JOIN catpartida on catPartida_pkPartida = pkPartida
+							where pkFactura=$regFac[0];";
+			$rspartidas=$mysql->consultas($sqlpartidas);
 			
-			$facGeneral=json_encode($regFac);
-			$data=json_encode($arrayDetalle);
-			$facturas[$x]['detalle']="<a href='#materialesPenDet'   data-toggle='modal' width='20' height='26' onclick='modalDetalles(".$facGeneral.",".$data.",".$y.");'><span class='glyphicon glyphicon-list-alt' ></span></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='../img/Excel.png' width='20' height='26' alt='excel' style='cursor:pointer;' onClick='exportarExcel(".$regFac[0].",0);'/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='../img/PDF.png' width='20' height='26' alt='pdf' style='cursor:pointer;' onClick='exportarPDF(".$regFac[0].",0);'/> ";
+
+			while ($regPartidas = mysqli_fetch_row($rspartidas)) {
+				$arrayPertidas[] = $regPartidas[0];
+			}
+
+			$facGeneral    = json_encode($regFac);
+			$data          = json_encode($arrayDetalle);
+			$datosPartidas = json_encode($arrayPertidas);
+
+			$facturas[$x]['detalle']="<a href='#materialesPenDet'   data-toggle='modal' width='20' height='26' onclick='modalDetalles(".$facGeneral.",".$datosPartidas.",".$data.",".$y.");'><span class='glyphicon glyphicon-list-alt' ></span></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='../img/Excel.png' width='20' height='26' alt='excel' style='cursor:pointer;' onClick='exportarExcel(".$regFac[0].",0);'/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='../img/PDF.png' width='20' height='26' alt='pdf' style='cursor:pointer;' onClick='exportarPDF(".$regFac[0].",0);'/> ";
 			$arrayDetalle=null;
+			$arrayPertidas=null;
 			$x++;
 		}
 		
@@ -88,11 +101,11 @@ class CFactura
 		{
 			//obteneiendo datos de la factura
 			//$facturas[$x]['pkFac']="<a href='#'  onclick='darSalida(".$regFac[0].");'><span class='glyphicon glyphicon-share-alt'></a></span>";
-			$facturas[$x]['serie']=$regFac[1];
-			$facturas[$x]['folio']=$regFac[2];
-			$facturas[$x]['proveedor']=$regFac[3];
-			$facturas[$x]['subtotal']="$".$regFac[4];
-			$facturas[$x]['total']="$".$regFac[5];
+			$facturas[$x]['serie']     =$regFac[1];
+			$facturas[$x]['folio']     =$regFac[2];
+			$facturas[$x]['proveedor'] =$regFac[3];
+			$facturas[$x]['subtotal']  ="$".$regFac[4];
+			$facturas[$x]['total']     ="$".$regFac[5];
 			//$facturas[$x]['estado']=$regFac[6];//MOSTRANDO EL ESTADO DE LA FACTURA
 			$facturas[$x]['fecha']=$regFac[7];
 			//obteniendo detalles de la factura
@@ -119,10 +132,22 @@ class CFactura
 			
 			//agregando detalles	
 			//$facturas[$x]['row']=$arrayDetalle;//enviando los detalles de cada factura
-			$facGeneral=json_encode($regFac);
-			$data=json_encode($arrayDetalle);
-			$facturas[$x]['pkFac']="<a href='#financierosPenDet'  data-toggle='modal' onclick='modalDetalles(".$facGeneral.",".$data.",".$y.");'><span class='glyphicon glyphicon-list-alt'></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='../img/Excel.png' width='20' height='26' alt='excel' style='cursor:pointer;' onClick='exportarExcel(".$regFac[0].",0);'/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='../img/PDF.png' width='20' height='26' alt='pdf' style='cursor:pointer;' onClick='exportarPDF(".$regFac[0].",0);'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='#'  onclick='darSalida(".$regFac[0].");'><span class='glyphicon glyphicon-share-alt'></a>";
+			$sqlpartidas="SELECT  catpartida.numeroPartida FROM factura
+							INNER JOIN factura_catpartida on factura_pkFactura= pkFactura
+							INNER JOIN catpartida on catPartida_pkPartida = pkPartida
+							where pkFactura=$regFac[0];";
+			$rspartidas=$mysql->consultas($sqlpartidas);
+			
+
+			while ($regPartidas = mysqli_fetch_row($rspartidas)) {
+				$arrayPertidas[] = $regPartidas[0];
+			}
+			$facGeneral  =json_encode($regFac);
+			$data        =json_encode($arrayDetalle);
+			$arrPartidas =json_encode($arrayPertidas);
+			$facturas[$x]['pkFac']="<a href='#financierosPenDet'  data-toggle='modal' onclick='modalDetalles(".$facGeneral.",".$arrPartidas.",".$data.",".$y.");'><span class='glyphicon glyphicon-list-alt'></span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='../img/Excel.png' width='20' height='26' alt='excel' style='cursor:pointer;' onClick='exportarExcel(".$regFac[0].",0);'/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src='../img/PDF.png' width='20' height='26' alt='pdf' style='cursor:pointer;' onClick='exportarPDF(".$regFac[0].",0);'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='#'  onclick='darSalida(".$regFac[0].");'><span class='glyphicon glyphicon-share-alt'></a>";
 			$arrayDetalle=null;
+			$arrayPertidas=null;
 			$x++;
 		}
 		

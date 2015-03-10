@@ -144,8 +144,8 @@
                             </div>
                           <div class="tab-content">
                           		<div class="tab-pane fade in active" id="salFacPen">
-                                	<div class="panel panel-body"><!--contenedor de la tabla Facturas-->
-                                           <table class="table table-striped table-bordered table-hover"  id="facPenFin" >
+                                	<div class="panel panel-body "><!--contenedor de la tabla Facturas-->
+                                           <table class="table table-striped table-bordered table-hover table-responsive"  id="facPenFin" >
                                                 <thead>
                                                     <tr>
                                                         <th>Folio</th>
